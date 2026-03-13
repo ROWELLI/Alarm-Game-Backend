@@ -2,7 +2,7 @@ from pathlib import Path
 import torch
 import torch.nn as nn
 
-MODEL_PATH = Path(__file__).parent / "models" / "best_mlp_pose_model.pth"
+MODEL_PATH = Path(__file__).parent / "models" / "dbdbd_model_weight_final.pth"
 
 class MLPClassifier(nn.Module):
     def __init__(self, input_dim, num_classes):

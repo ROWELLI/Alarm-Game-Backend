@@ -1,13 +1,15 @@
 from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
+
 from hand_detector import analyze_rps_from_bytes
 from pose_detector import analyze_dbdbd_from_bytes
+from ccc_detector import analyze_ccc_from_bytes
 
 app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=["http://localhost:3000", "https://alarm-game.netlify.app"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -46,5 +48,22 @@ async def detect_dbdbd(file: UploadFile = File(...)):
             "success": False,
             "pose_detected": False,
             "label": "unknown",
+            "message": str(e)
+        }
+
+@app.post("/detect/ccc")
+async def detect_ccc(file: UploadFile = File(...)):
+    try:
+        data = await file.read()
+        result = analyze_ccc_from_bytes(data)
+        print("CCC 판정:", result)
+        return result
+    except Exception as e:
+        print("CCC 에러:", e)
+        return {
+            "success": False,
+            "face_detected": False,
+            "label": None,
+            "confidence": None,
             "message": str(e)
         }
