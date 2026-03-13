@@ -9,7 +9,9 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "https://alarm-game.netlify.app"],
+    allow_origins=["http://localhost:3000", 
+                   "https://alarm-game.netlify.app",
+                  "https://remarkable-sprinkles-e53465.netlify.app"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
